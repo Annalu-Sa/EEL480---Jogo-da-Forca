@@ -243,7 +243,7 @@ begin
 		else '0';
 	--rdone <= '1' when stCur = stWait else '0';
 	--Increments the pointer so the statemachine goes through the commands
-	process (lcd_cmd_ptr, oneUSClk,verificador)
+	process (lcd_cmd_ptr, oneUSClk)
    		begin
 			if (oneUSClk = '1' and oneUSClk'event) then
 				if ((stNext = stInitDne or stNext = stDisplayCtrlSet or stNext = stDisplayClear) and writeDone = '0') then 
