@@ -164,8 +164,7 @@ end component key2ascii;
 	signal nxState:gstate;             --Váriavel de estados responsáveis pela interface visível.
 	signal crState:gstate:= menu;		  --Define o estado inicial como "menu".
    signal delayTR:std_logic:= '0';	  --Fornece o tempo necessário para que o jogador leia a mensagem de vitória/derrota.
-	signal delay:std_logic:= '0';		  --Indica que o LCD escreveu todas as posições iniciais à serem utilizadas (0-12).	
-	signal counting:std_logic_vector (6 downto 0):= "0000000";	--Contador que fornece delay para escrita.
+	signal delay:std_logic:= '0';		  --Indica que o LCD escreveu todas as posições iniciais à serem utilizadas (0-12).
 	signal counter:std_logic_vector (21 downto 0):= "0000000000000000000000"; --Contador que fornece delay para leitura até rst.
 	-- Sinais responsaveis pelo controle da maquina de estados
 	signal nxLstate:gletter; 			  --Váriavel de estados responsáveis pela verificação das letras pressionadas.
@@ -454,18 +453,6 @@ begin
 	 -- Declara kb_code e key2ascii
 	 teclado : kb_code port map(CLK => OneUSClk,reset => rst,ps2c => ps2c,ps2d => ps2d,rd_key_code => rd_key_code,key_code => key_code,kb_buf_empty => kb_buf_empty);
 	 conversor : key2ascii port map(key_code => key_code,ascii_code =>letter);
-		
-		-- Processo responsável por incrementar o contador fornecendo o tempo necessário para a escrita. 
-	 process (OneUSClk, delayTW)
-		begin
-			if (OneUSClk = '1' and OneUSClk'event) then
-				if delayTW = '1' then
-					counting <= "0000000";
-				else
-					counting <= counting + 1;
-				end if;
-			end if;
-		end process;
 		
 		-- Processo responsável por incrementar o contador fornecendo o tempo necessário para o jogador ler a mensagem final.
 	 process (OneUSClk, delayTR)
